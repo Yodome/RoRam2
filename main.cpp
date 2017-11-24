@@ -56,11 +56,11 @@ struct ParamsJeu{
 };
 
 //-------------------------------------- Modelisation du plateau --------------------------------
-void initialiserGrille(Grille &gr)
+void initialiserGrille(Grille &gr,const ParamsJeu &pj)
 {
-    for (int i = 0; i < NMAXLIGS; i++)
+    for (int i = 0; i < pj.nbLignes; i++)
     {
-        for (int j = 0; j < NMAXCOLS; j++)
+        for (int j = 0; j < pj.nbCol; j++)
         {
             gr.tab[i][j] = 0;
         }
@@ -70,9 +70,9 @@ void initialiserGrille(Grille &gr)
 
 
 //-------------------------------------- Modelisation d'une position --------------------------------
-bool estValide(const Position &pos,const Grille &gr)
+bool estValide(const Position &pos,const Grille &gr, const ParamsJeu &pj)
 {
-    return ( pos.x <= NMAXCOLS && pos.y <= NMAXLIGS);
+    return ( pos.x <= pj.nbCol && pos.y <= pj.nbLignes);
 }
 
 
@@ -94,26 +94,26 @@ int aleatoire(int min, int max)
     return rand()%(max-min)+min;// intervalle [a;b[
 }
 
-void poserObjet(Grille &gr, Position &pos)
+void poserObjet(Grille &gr, Position &pos, const ParamsJeu &pj)
 {
-    pos.x = aleatoire(0,NMAXCOLS-1); // genere une position pour l'objet aléatoirement
-    pos.y = aleatoire(0,NMAXLIGS-1);
+    pos.x = aleatoire(0,pj.nbCol-1); // genere une position pour l'objet aléatoirement
+    pos.y = aleatoire(0,pj.nbLignes-1);
     int objet = aleatoire(1,VMAX+1); // genere un objet de valeur aleatoir
     cout << "la valeur de l'objet est : " << objet << endl;
     if  ( gr.tab[pos.y][pos.x] == 0 )
     {
         gr.tab[pos.y][pos.x] = objet;
     }else{
-        poserObjet(gr, pos); // pose un objet si les coordonnées n'étaient pas valides
+        poserObjet(gr, pos, pj); // pose un objet si les coordonnées n'étaient pas valides
     }
 }
 
-void poserObjetsGrille( Grille &gr, int nObjets)
+void poserObjetsGrille( Grille &gr, int nObjets, const ParamsJeu &pj)
 {
     Position pos;
     for (int i = 0; i < nObjets; i++)
     {
-        poserObjet(gr, pos);
+        poserObjet(gr, pos, pj);
     }
 
 
@@ -122,10 +122,10 @@ void poserObjetsGrille( Grille &gr, int nObjets)
 
 
 //-------------------------------------- Affichage de la grille --------------------------------
-char symboleCase( const Position &pos, const Grille & gr)
+char symboleCase( int y, int x,  const Grille & gr)
 {
     char c;
-    switch (gr.tab[pos.y][pos.x])
+    switch (gr.tab[y][x])
     {
         case VMIROIR1:
             c = '/';
@@ -142,31 +142,49 @@ char symboleCase( const Position &pos, const Grille & gr)
     return c;
 }
 
-void afficherGrille(const Grille &gr)
+void afficherGrille(const Grille &gr, const ParamsJeu &pj)
 {
-    for (int i = 0; i < NMAXLIGS; i++)
+    cout << ".  ";
+    for ( int i = 0; i < pj.nbCol ;i++)
     {
-        for (int j = 0; j < NMAXCOLS; j++)
+        cout << i+1 << " " ;
+    }
+    cout << endl;
+    for (int i = 0; i < pj.nbLignes; i++)
+    {
+        cout << i+1 << "| ";
+        for (int j = 0; j < pj.nbCol; j++)
         {
-            cout << gr.tab[i][j] << " ";
+            if (gr.tab[i][j] > 0)
+            {
+                cout << gr.tab[i][j] << " ";
+            }
+            else
+            {
+                cout << symboleCase(i,j,gr) << " ";
+            }
+
+
 
         }
         cout << endl;
 
     }
     cout << endl;
+
+
 }
 
 
 
 //-------------------------------------- Placement des miroirs --------------------------------
-bool estJouable(const Grille &gr, const Position &pos)
+bool estJouable(const Grille &gr, const Position &pos, const ParamsJeu &pj)
 {
 
-    return (estLibre(pos,gr) && estValide(pos,gr));
+    return (estLibre(pos,gr) && estValide(pos,gr, pj));
 }
 
-Position saisirMiroir(const Grille &gr, Position &pos) //
+Position saisirMiroir(const Grille &gr, Position &pos, const ParamsJeu &pj) //
 {
     cout << "Entrer x : " ;
     cin >> pos.x;
@@ -175,11 +193,11 @@ Position saisirMiroir(const Grille &gr, Position &pos) //
     cin >> pos.y;
     pos.y--;
 
-    if (estValide(pos, gr) && estLibre(pos, gr)){
+    if (estJouable(gr,pos,pj)){
         return pos;
     }else{
         cout << "Position invalide, rééssayez." << endl;
-        saisirMiroir( gr, pos);
+        saisirMiroir( gr, pos, pj);
     }
 
 
@@ -198,13 +216,13 @@ int saisieTypeMiroir(int &miroir)
 }
 
 
-void poserMiroirs(int nMiroir, Grille &gr, Position &pos)
+void poserMiroirs(const ParamsJeu &pj, Grille &gr, Position &pos)
 {
     int m;
-    for (int i = 0; i < nMiroir; i++)
+    for (int i = 0; i < pj.nbMiroir; i++)
     {
         cout << "Entrer la position du miroir " << i+1 << endl;
-        saisirMiroir(gr, pos);
+        saisirMiroir(gr, pos, pj);
         m = saisieTypeMiroir(m);
         majGrille(pos, gr, m);
     }
@@ -219,13 +237,13 @@ bool estMiroir(const Position &pos,const Grille &gr)
 }
 
 
-void effacerMiroirs(Grille &gr)
+void effacerMiroirs(Grille &gr, const ParamsJeu &pj)
 {
     Position pos;
 
-    for ( int i = 0; i < NMAXLIGS; i++)
+    for ( int i = 0; i < pj.nbLignes; i++)
     {
-        for ( int j = 0; j < NMAXCOLS; j++)
+        for ( int j = 0; j < pj.nbCol; j++)
         {
             pos.y = i;
             pos.x = j;
@@ -241,13 +259,32 @@ void effacerMiroirs(Grille &gr)
 
 
 //-------------------------------------- Modelisation du parcours --------------------------------
-void afficherGrilleParcours(const GrilleVisite &grv)
+void afficherGrilleParcours(const GrilleVisite &grv, const ParamsJeu &pj)
 {
-    for (int i = 0; i < NMAXLIGS; i++)
+    cout << ".  ";
+    for ( int i = 0; i < pj.nbCol ;i++)
     {
-        for (int j = 0; j < NMAXCOLS; j++)
+        cout << i+1 << " " ;
+    }
+    cout << endl;
+    for (int i = 0; i < pj.nbLignes; i++)
+    {
+        cout << i+1 << "| ";
+        for (int j = 0; j < pj.nbCol; j++)
         {
-            cout << grv.tab[i][j] << " ";
+            if ( grv.tab[i][j] == 1)
+            {
+                cout << "| ";
+            }
+            else if ( grv.tab[i][j] ==2 )
+            {
+                cout << "- ";
+            }
+            else{
+
+                cout << symboleCase(i,j,grv) << " ";
+            }
+
 
         }
         cout << endl;
@@ -311,13 +348,13 @@ bool estObjet(const Grille &gr, const Position&pos )
 }
 
 
-bool estPosFinValide(const Grille &gr, const Position &pos) // comprend pas
+bool estPosFinValide(const Grille &gr, const Position &pos, const ParamsJeu &pj)
 {
-    if ( gr.tab[NMAXLIGS][NMAXCOLS] == VMIROIR2 ||  gr.tab[NMAXLIGS][NMAXCOLS] == VMIROIR1)
+    if ( gr.tab[pj.nbLignes][pj.nbCol] == VMIROIR2 ||  gr.tab[pj.nbLignes][pj.nbCol] == VMIROIR1)
     {
         return false;
     }
-    return (pos.y == NMAXLIGS && pos.x == NMAXCOLS - 1) || (pos.y == NMAXLIGS - 1 && pos.x == NMAXCOLS);
+    return (pos.y == pj.nbLignes && pos.x == pj.nbCol - 1) || (pos.y == pj.nbLignes - 1 && pos.x == pj.nbCol);
 
 }
 
@@ -348,7 +385,7 @@ void avancerPos(Position &pos, int diry, int dirx)
     }
 }
 
-void parcoursRobot(Grille &gr, GrilleVisite &grv,RParcours &rp, int nmiroirs)
+void parcoursRobot(Grille &gr, GrilleVisite &grv,RParcours &rp, int nmiroirs, const ParamsJeu &pj)
 {
     Position pos;
     pos.y = 0;
@@ -356,13 +393,14 @@ void parcoursRobot(Grille &gr, GrilleVisite &grv,RParcours &rp, int nmiroirs)
     int dirx = 1;
     int diry = 0;
     int cMiroir=0;
+    rp.nbObj =0;
+    rp.ptsTotal=0;
+    rp.bonus=0;
 
 
-    cout << endl << "--------------------------------------------------" << endl;
-    afficherGrilleParcours(grv);
 
 
-    while(pos.y < NMAXLIGS && pos.y >= 0 && pos.x < NMAXCOLS && pos.x >= 0 )
+    while(pos.y < pj.nbLignes && pos.y >= 0 && pos.x < pj.nbCol && pos.x >= 0 )
     {
 
         if ( estObjet(gr,pos) )
@@ -393,9 +431,10 @@ void parcoursRobot(Grille &gr, GrilleVisite &grv,RParcours &rp, int nmiroirs)
     }
 
 
-    cout << endl << "--------------------------------------------------" << endl;
-    afficherGrilleParcours(grv);
-    afficherGrille(gr);
+    if (cMiroir == nmiroirs) rp.ptsTotal += pj.bobo;
+
+    afficherGrilleParcours(grv,pj);
+
 }
 
 
@@ -403,20 +442,20 @@ void parcoursRobot(Grille &gr, GrilleVisite &grv,RParcours &rp, int nmiroirs)
 
 
 //------------------------------------ JOUEURS -----------------------------------------------------------
-void initialiserScores(int nbJoueurs,Scores &score)
+void initialiserScores(const ParamsJeu &pj,Scores &score)
 {
     score.score = 0;
-    score.nbJoueur = nbJoueurs;
+    score.nbJoueur = pj.nbJoueurs;
 }
 
-void actualiserScore(int &joueurs[], int &nJoueur,Scores &score)
+void actualiserScore(int joueurs[], const ParamsJeu &pj,Scores &score, int joueurCourant)
 {
-    joueurs[nJoueur-1] += score.score;
+    joueurs[joueurCourant] += score.score;
     score.score = 0;
 }
 
 
-void afficherGagnant(int &joueurs[], Scores &score )
+void afficherGagnant(int joueurs[], Scores &score )
 {
     int max = joueurs[0];
     int numJoueur = 1;
@@ -499,44 +538,47 @@ void saisirParams(ParamsJeu &pj)
 
 
 
+/*
+ * METTRE PJ PARTOUT ET NE PAS OUBLIER DE LE DECLARER
+ *
+ */
 
+//void test_initialisation()
+//{
+//    Grille gr;
+//    initialiserGrille(gr);
+//    poserObjetsGrille( gr, 2);
+//    afficherGrille(gr);
+//    Position pos;
+//    pos.x=0;
+//    pos.y=0;
+//    poserMiroirs(1,gr,pos);
+//    afficherGrille(gr);
+//}
 
-void test_initialisation()
-{
-    Grille gr;
-    initialiserGrille(gr);
-    poserObjetsGrille( gr, 2);
-    afficherGrille(gr);
-    Position pos;
-    pos.x=0;
-    pos.y=0;
-    poserMiroirs(1,gr,pos);
-    afficherGrille(gr);
-}
+//void test_miroirs()
+//{
+//    Grille gr;
+//    initialiserGrille(gr);
+//    poserObjetsGrille( gr, 2);
+//    afficherGrille(gr);
+//    Position pos;
+//    pos.x=0;
+//    pos.y=0;
+//    poserMiroirs(3,gr,pos);
+//    afficherGrille(gr);
+//    effacerMiroirs(gr);
+//    afficherGrille(gr);
+//}
 
-void test_miroirs()
-{
-    Grille gr;
-    initialiserGrille(gr);
-    poserObjetsGrille( gr, 2);
-    afficherGrille(gr);
-    Position pos;
-    pos.x=0;
-    pos.y=0;
-    poserMiroirs(3,gr,pos);
-    afficherGrille(gr);
-    effacerMiroirs(gr);
-    afficherGrille(gr);
-}
-
-void test_parcours()
+/*void test_parcours()
 {
     GrilleVisite grv;
     initialiserGrille(grv);
     afficherGrilleParcours(grv);
     Position pos;
     pos.x=0;
-   pos.y=0;
+    pos.y=0;
 //    majGrilleVisite(pos, grv,0,1);
 //
 //    pos.x=3;
@@ -567,37 +609,109 @@ void test_parcours()
     poserMiroirs(2,gr,pos);
     parcoursRobot(gr,grv,rp,2);
 
-}
+}*/
+
+//
+//void test_obj()
+//{
+//    Grille gr;
+//    initialiserGrille(gr);
+//    poserObjetsGrille( gr, 2);
+//    afficherGrille(gr);
+//    Position pos;
+//    cout << "Entrer y : " << endl;
+//    cin >> pos.y;
+//    cout << "Entrer x : " << endl;
+//    cin >> pos.x;
+//    pos.x--;
+//    pos.y--;
+//    if( estObjet(gr,pos) )
+//    {
+//        cout << "c'est un obj";
+//    }
+//
+//}
 
 
-void test_obj()
+
+void initialiserJoueurs(int joueur[], ParamsJeu &pj)
 {
-    Grille gr;
-    initialiserGrille(gr);
-    poserObjetsGrille( gr, 2);
-    afficherGrille(gr);
-    Position pos;
-    cout << "Entrer y : " << endl;
-    cin >> pos.y;
-    cout << "Entrer x : " << endl;
-    cin >> pos.x;
-    pos.x--;
-    pos.y--;
-    if( estObjet(gr,pos) )
+    for (int i = 0; i < pj.nbJoueurs; i++)
     {
-        cout << "c'est un obj";
+        joueur[i] = 0;
     }
 
 }
 
+void jeu()
+{
+    ParamsJeu pj;
+    Grille gr;
+    GrilleVisite grv;
+    Position pos;
 
+    Scores sc;
+
+
+    // Initialisation du jeu et ses parametres
+    saisirParams(pj);
+    initialiserGrille(gr, pj);
+    initialiserGrille(grv, pj);
+    initialiserScores(pj,sc);
+    poserObjetsGrille(gr,pj.nbObj,pj);
+    int joueur[pj.nbJoueurs];
+    initialiserJoueurs(joueur,pj);
+   // afficherGrille(gr,pj);
+
+
+    int objRestant = pj.nbObj;
+    int joueurCourant = 0;
+
+    for (int i = 0; i < pj.nbJoueurs; i++)
+    {
+        cout << joueur[i] << endl;
+    }
+
+
+
+
+    while ( objRestant != 0 || joueurCourant != pj.nbJoueurs-1 )
+    {
+        RParcours rp;
+        cout << "Tour du joueur : " << joueurCourant + 1 << endl; // Affichage d'un message pour connaitre le joueur courant
+        afficherGrille(gr,pj);
+        poserMiroirs(pj,gr,pos); // on va demandé au joueur de placé ses miroirs
+        parcoursRobot(gr,grv,rp,pj.nbMiroir,pj);
+        objRestant -= rp.nbObj; // on enleve les objets ramassés
+        sc.score = rp.ptsTotal;
+        actualiserScore(joueur, pj, sc,joueurCourant);
+        effacerMiroirs(gr, pj);
+
+        if (joueurCourant == pj.nbJoueurs-1)
+        {
+            joueurCourant = 0;
+        }
+        else
+        {
+            joueurCourant++;
+        }
+        initialiserGrille(grv, pj);
+
+
+    }
+    afficherGagnant(joueur,sc);
+
+
+
+
+}
 
 int main() {
     srand(time(0));
-
+    jeu();
 
 //    test_obj();
-    test_parcours();
+//    test_parcours();
 //    test_initialisation();
 //    test_miroirs();
 
