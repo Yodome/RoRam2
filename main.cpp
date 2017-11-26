@@ -7,8 +7,8 @@ using namespace std;
 
 
 const int VMAX = 9; // valeur maximal des objets
-const int NMAXLIGS = 8;
-const int NMAXCOLS = 8;
+const int NMAXLIGS = 10;
+const int NMAXCOLS = 10;
 const int LIBRE = 0;
 const int VMIROIR1 = -1;
 const int VMIROIR2 = -2;
@@ -269,9 +269,19 @@ Position saisirMiroir(const Grille &gr, Position &pos, const ParamsJeu &pj) //
 {
     cout << "Entrer x : " ;
     cin >> pos.x;
+    if(cin.fail())
+    {
+    	cout << "Entrer un entier compris entre 1 et " << pj.nbCol << endl;
+    	saisirMiroir(gr, pos, pj);
+	}
     pos.x--; // on dÃ©crÃ©mente afin que la coordonnÃ©e entrÃ©e par le joueur corresponde Ã  la coordonnÃ©e dans le tableau
     cout << "Entrer y : " ;
     cin >> pos.y;
+    if(cin.fail())
+    {
+    	cout << "Entrer un entier compris entre 1 et " << pj.nbLignes << endl;
+    	saisirMiroir(gr, pos, pj);
+	}
     pos.y--;
 
     if (estJouable(gr,pos,pj)){
@@ -293,6 +303,11 @@ int saisieTypeMiroir(int &miroir)
 {
     cout << "Saisir un type de miroir : " << endl << "-1 = /" << endl << "-2 = \\" << endl;
     cin >> miroir;
+    if(cin.fail())
+    {
+    	cout << "Type de miroir invalide, ecrire -1 ou -2" << endl;
+    	saisieTypeMiroir(miroir);
+	}
     if ( static_cast<int>(miroir) != VMIROIR1 && static_cast<int>(miroir) != VMIROIR2) // on verifie si le type saisie est un miroir
     {
         cout << "Type de miroir invalide, ecrire -1 ou -2 " << endl;
@@ -656,25 +671,25 @@ void afficherGagnant(int joueurs[], Scores &score )
 void saisirParams(ParamsJeu &pj)
 {
     nbligne:
-    cout << "Entrer le nombres de ligne : " ;
+    cout << "Entrer le nombre de lignes : " ;
     cin >> pj.nbLignes;
-    if ( pj.nbLignes > NMAXLIGS || pj.nbLignes < 2)
+    if ( pj.nbLignes > NMAXLIGS || pj.nbLignes < 3)
     {
-        cout << "Invalide, saisir une taille comprise entre 2 et 8" << endl;
+        cout << "Invalide, saisir une taille comprise entre 3 et 10" << endl;
         goto nbligne;
     }
 
     nbCol:
-    cout << "Entrer le nombres de colone : " ;
+    cout << "Entrer le nombre de colonnes : " ;
     cin >> pj.nbCol;
-    if ( pj.nbLignes > NMAXCOLS || pj.nbLignes < 2)
+    if ( pj.nbLignes > NMAXCOLS || pj.nbLignes < 3)
     {
-        cout << "Invalide, saisir une taille comprise entre 2 et 8" << endl;
+        cout << "Invalide, saisir une taille comprise entre 3 et 10" << endl;
         goto nbCol;
     }
 
     nbJoueur:
-    cout << "Entrer le nombres de joueurs : " ;
+    cout << "Entrer le nombre de joueurs : " ;
     cin >> pj.nbJoueurs;
     if ( pj.nbJoueurs > NJOUEURS || pj.nbJoueurs < 2)
     {
@@ -683,7 +698,7 @@ void saisirParams(ParamsJeu &pj)
     }
 
     nbObj:
-    cout << "Entrer le nombres d'objet Ã  placer : " ;
+    cout << "Entrer le nombre d'objet Ã  placer : " ;
     cin >> pj.nbObj;
     if ( pj.nbObj > pj.nbCol*pj.nbLignes || pj.nbObj <= 0)
     {
