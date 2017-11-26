@@ -27,13 +27,13 @@ struct Grille
 };
 
 /**
-	Grille permettant de reprÈsenter le parcours du robot
+	Grille permettant de repr√©senter le parcours du robot
 */
 typedef Grille GrilleVisite;
 
 /**
 	Contient 2 coordonnees x et y simulant une Position
-*/ 
+*/
 struct Position
 {
     int x;
@@ -41,12 +41,12 @@ struct Position
 };
 
 /**
-	Structure contenant les informations relatives ‡ un parcours du robot
+	Structure contenant les informations relatives √† un parcours du robot
 */
 struct RParcours
 {
     int nbObj;		// nombre d'objets dans la grille
-    int ptsTotal;	// nombre de points au total rÈcoltÈs par le parcours du robot pour un joueur
+    int ptsTotal;	// nombre de points au total r√©colt√©s par le parcours du robot pour un joueur
     bool bonus;		// valeur du bonus si le robot passe par tous les miroirs
 };
 
@@ -60,22 +60,22 @@ struct Scores
 };
 
 /**
-	Contient tous les paramËtres de jeu que l'utilisateur renseigne avant de jouer
+	Contient tous les param√®tres de jeu que l'utilisateur renseigne avant de jouer
 */
 struct ParamsJeu{
     int nbLignes;	// nombre de lignes de la grille
     int nbCol;		// nombre de colonnes de la grille
     int nbJoueurs;	// nombre de joueurs pour la partie
     int nbObj;		// nombre d'objets dans la grille
-    int nbMiroir;	// nombre de miroirs ‡ disposition pour un tour
+    int nbMiroir;	// nombre de miroirs √† disposition pour un tour
     int bobo; 		// valeur du bonus
 };
 
 //-------------------------------------- Modelisation du plateau --------------------------------
 /**
-	Initialise tous les ÈlÈments de la grille ‡ 0
-	@param[in] gr - grille ‡ initialisÈ
-	@param[in] pj - paramËtres de jeu (nb lignes/colonnes)
+	Initialise tous les √©l√©ments de la grille √† 0
+	@param[in] gr - grille √† initialis√©
+	@param[in] pj - param√®tres de jeu (nb lignes/colonnes)
 */
 void initialiserGrille(Grille &gr,const ParamsJeu &pj)
 {
@@ -92,10 +92,10 @@ void initialiserGrille(Grille &gr,const ParamsJeu &pj)
 
 //-------------------------------------- Modelisation d'une position --------------------------------
 /**
-	Indique si une position donnÈe dans la grille est valide : x et y dans la grille et non en dehors
-	@param[in] pos - position dont on vÈrifie si les coordonnÈes sont valides
-	@param[in] gr - la grille dans laquelle on vÈrifie les coordonnÈes
-	@param[in] pj - paramËtres de jeu (nb lignes/colonnes)
+	Indique si une position donn√©e dans la grille est valide : x et y dans la grille et non en dehors
+	@param[in] pos - position dont on v√©rifie si les coordonn√©es sont valides
+	@param[in] gr - la grille dans laquelle on v√©rifie les coordonn√©es
+	@param[in] pj - param√®tres de jeu (nb lignes/colonnes)
 	@return boolean - true si la position est valide, false sinon
 */
 bool estValide(const Position &pos,const Grille &gr, const ParamsJeu &pj)
@@ -104,9 +104,9 @@ bool estValide(const Position &pos,const Grille &gr, const ParamsJeu &pj)
 }
 
 /**
-	Inidique si une position donnÈe est libre : c'est ‡ dire si la valeur dans la grille est 0
-	@param[in] pos - position dont on vÈrifie si les coordonnÈes dans la grille sont libres
-	@param[in] gr - grille dans laquelle on vÈrifie si la case est libre
+	Inidique si une position donn√©e est libre : c'est √† dire si la valeur dans la grille est 0
+	@param[in] pos - position dont on v√©rifie si les coordonn√©es dans la grille sont libres
+	@param[in] gr - grille dans laquelle on v√©rifie si la case est libre
 	@return boolean - true si la case est libre
 */
 bool estLibre(const Position &pos,const Grille &gr)
@@ -118,9 +118,9 @@ bool estLibre(const Position &pos,const Grille &gr)
 
 //-------------------------------------- Initialisation de la grille --------------------------------
 /**
-	Met ‡ jour la grille aux coordonnÈes de la Position selon la valeur val
-	@param[in] pos - position qui sert ‡ changer une valeur dans la grille selon cette position
-	@param[in,out] gr - grille passÈe en paramËtre dont on change la valeur aux coordonnÈes de la position selon la valeur val
+	Met √† jour la grille aux coordonn√©es de la Position selon la valeur val
+	@param[in] pos - position qui sert √† changer une valeur dans la grille selon cette position
+	@param[in,out] gr - grille pass√©e en param√®tre dont on change la valeur aux coordonn√©es de la position selon la valeur val
 	@param[in] val - valeur que prend la case de la grille
 */
 void majGrille(const Position &pos, Grille &gr, int val)
@@ -129,10 +129,10 @@ void majGrille(const Position &pos, Grille &gr, int val)
 }
 
 /**
-	Renvoie un nombre alÈatoire compris dans l'intervalle [min ; max[
-	@param[in] min - valeur infÈrieure de l'intervalle
-	@param[in] max - valeur supÈrieure de l'intervalle
-	@return int - retourne un nombre entier alÈatoire
+	Renvoie un nombre al√©atoire compris dans l'intervalle [min ; max[
+	@param[in] min - valeur inf√©rieure de l'intervalle
+	@param[in] max - valeur sup√©rieure de l'intervalle
+	@return int - retourne un nombre entier al√©atoire
 */
 int aleatoire(int min, int max)
 {
@@ -140,14 +140,14 @@ int aleatoire(int min, int max)
 }
 
 /**
-	Permet de poser un objet alÈtoire ‡ un endroit alÈatoire dans la grille
+	Permet de poser un objet al√©toire √† un endroit al√©atoire dans la grille
 	@param[in,out] gr - grille dans laquelle on pose un objet
-	@param[in] pos - coordonnÈes auxquelles poser un objet, dÈfinies alÈatoirement
-	@param[in] pj - paramËtres de  jeu (nb lignes/colonnes)
+	@param[in] pos - coordonn√©es auxquelles poser un objet, d√©finies al√©atoirement
+	@param[in] pj - param√®tres de  jeu (nb lignes/colonnes)
 */
 void poserObjet(Grille &gr, Position &pos, const ParamsJeu &pj)
 {
-    pos.x = aleatoire(0,pj.nbCol-1); // genere une position pour l'objet al√©atoirement
+    pos.x = aleatoire(0,pj.nbCol-1); // genere une position pour l'objet al√É¬©atoirement
     pos.y = aleatoire(0,pj.nbLignes-1);
     int objet = aleatoire(1,VMAX+1); // genere un objet de valeur aleatoir
     cout << "la valeur de l'objet est : " << objet << endl;
@@ -155,7 +155,7 @@ void poserObjet(Grille &gr, Position &pos, const ParamsJeu &pj)
     {
         gr.tab[pos.y][pos.x] = objet;
     }else{
-        poserObjet(gr, pos, pj); // pose un objet si les coordonn√©es n'√©taient pas valides
+        poserObjet(gr, pos, pj); // pose un objet si les coordonn√É¬©es n'√É¬©taient pas valides
     }
 }
 
@@ -178,10 +178,10 @@ void poserObjetsGrille( Grille &gr, int nObjets, const ParamsJeu &pj)
 
 //-------------------------------------- Affichage de la grille --------------------------------
 /**
-	Indique le symbole d'une case donnÈe aux coordonnÈes x et y
-	@param[in] y - coordonnÈe y (ordonnÈe)
-	@param[in] x - coordonnÈe x (abscisse)
-	@param[in] gr - grille dont on vÈrifie le symbole d'une case aux coordonnÈes x et y
+	Indique le symbole d'une case donn√©e aux coordonn√©es x et y
+	@param[in] y - coordonn√©e y (ordonn√©e)
+	@param[in] x - coordonn√©e x (abscisse)
+	@param[in] gr - grille dont on v√©rifie le symbole d'une case aux coordonn√©es x et y
 	@return char - retourne le symbole de la case [ '/' , '\' , '.' ]
 */
 char symboleCase( int y, int x,  const Grille & gr)
@@ -205,9 +205,9 @@ char symboleCase( int y, int x,  const Grille & gr)
 }
 
 /**
-	Affiche la grille ‡ l'Ècran dans la console
-	@param[in] gr - grille ‡ afficher
-	@param[in] pj - paramËtres de jeu (nb lignes/colonnes)
+	Affiche la grille √† l'√©cran dans la console
+	@param[in] gr - grille √† afficher
+	@param[in] pj - param√®tres de jeu (nb lignes/colonnes)
 */
 void afficherGrille(const Grille &gr, const ParamsJeu &pj)
 {
@@ -246,10 +246,10 @@ void afficherGrille(const Grille &gr, const ParamsJeu &pj)
 
 //-------------------------------------- Placement des miroirs ------------------------------------
 /**
-	Indique si une position donnÈe est jouable : c'est ‡ dire si cette position dans la grille est libre et valide
+	Indique si une position donn√©e est jouable : c'est √† dire si cette position dans la grille est libre et valide
 	@param[in] gr - grille
-	@param[in] pos - position (coordonnÈes)
-	@param[in] pj - paramËtres de jeu (utilisÈ dans la fonction estValide)
+	@param[in] pos - position (coordonn√©es)
+	@param[in] pj - param√®tres de jeu (utilis√© dans la fonction estValide)
 	@return boolean - renvoie vrai si la case est jouable, faux sinon
 */
 bool estJouable(const Grille &gr, const Position &pos, const ParamsJeu &pj)
@@ -259,17 +259,17 @@ bool estJouable(const Grille &gr, const Position &pos, const ParamsJeu &pj)
 }
 
 /**
-	Permet de saisir la position d'un miroir ‡ placer dans la grille
+	Permet de saisir la position d'un miroir √† placer dans la grille
 	@param[in] gr - grille dans laquelle on placera le miroir
 	@param[out] pos - position que saisit l'utilisateur afin de placer un miroir
-	@param[in] pj - paramËtres de jeu (utilisÈ dans la fonction estJouable
-	@return Position - retourne la position ‡ laquelle on peut placer le miroir, si la case est jouable
+	@param[in] pj - param√®tres de jeu (utilis√© dans la fonction estJouable
+	@return Position - retourne la position √† laquelle on peut placer le miroir, si la case est jouable
 */
 Position saisirMiroir(const Grille &gr, Position &pos, const ParamsJeu &pj) //
 {
     cout << "Entrer x : " ;
     cin >> pos.x;
-    pos.x--; // on d√©cr√©mente afin que la coordonn√©e entr√©e par le joueur corresponde √† la coordonn√©e dans le tableau
+    pos.x--; // on d√É¬©cr√É¬©mente afin que la coordonn√É¬©e entr√É¬©e par le joueur corresponde √É  la coordonn√É¬©e dans le tableau
     cout << "Entrer y : " ;
     cin >> pos.y;
     pos.y--;
@@ -285,8 +285,8 @@ Position saisirMiroir(const Grille &gr, Position &pos, const ParamsJeu &pj) //
 }
 
 /**
-	Demande ‡ l'utilisateur quel type de miroir il veut placer : '/' ou '\'
-	@param[out] miroir - miroir que l'utilisateur dÈfinit
+	Demande √† l'utilisateur quel type de miroir il veut placer : '/' ou '\'
+	@param[out] miroir - miroir que l'utilisateur d√©finit
 	@return int - retourne le miroir que l'utilisateur a saisi
 */
 int saisieTypeMiroir(int &miroir)
@@ -302,10 +302,10 @@ int saisieTypeMiroir(int &miroir)
 }
 
 /**
-	Permet de poser nbMiroir : paramËtre que l'utilisateur renseigne avant de commencer la partie
-	@param[in] pj - paramËtres de jeu (nbMiroir)
+	Permet de poser nbMiroir : param√®tre que l'utilisateur renseigne avant de commencer la partie
+	@param[in] pj - param√®tres de jeu (nbMiroir)
 	@param[in,out] gr - grille dans laquelle on pose un miroir
-	@param[in,out] pos - position ‡ laquelle l'utilisateur place le miroir
+	@param[in,out] pos - position √† laquelle l'utilisateur place le miroir
 */
 void poserMiroirs(const ParamsJeu &pj, Grille &gr, Position &pos)
 {
@@ -323,10 +323,10 @@ void poserMiroirs(const ParamsJeu &pj, Grille &gr, Position &pos)
 
 //-------------------------------------- Effacement des miroirs --------------------------------
 /**
-	Indique une position donnÈ dans la grille est un miroir
-	@param[in] pos - coordonnÈes
+	Indique une position donn√© dans la grille est un miroir
+	@param[in] pos - coordonn√©es
 	@param[in] gr - grille
-	@return boolean - true si la position dans la grille correspond ‡ un miroir, false sinon
+	@return boolean - true si la position dans la grille correspond √† un miroir, false sinon
 */
 bool estMiroir(const Position &pos,const Grille &gr)
 {
@@ -334,9 +334,9 @@ bool estMiroir(const Position &pos,const Grille &gr)
 }
 
 /**
-	Permet d'effacer tous les miroirs de la grille passÈe en paramËtres
+	Permet d'effacer tous les miroirs de la grille pass√©e en param√®tres
 	@param[in,out] gr - grille
-	@param[in] pj - paramËtres de jeu (nb lignes/colonnes)
+	@param[in] pj - param√®tres de jeu (nb lignes/colonnes)
 */
 void effacerMiroirs(Grille &gr, const ParamsJeu &pj)
 {
@@ -363,7 +363,7 @@ void effacerMiroirs(Grille &gr, const ParamsJeu &pj)
 /**
 	Affiche la grille de parcours du robot
 	@param[in,out] grv - grille visite : grille de parcours du robot
-	@param[in] pj - paramËtres de jeu (nb lignes/colonnes)
+	@param[in] pj - param√®tres de jeu (nb lignes/colonnes)
 */
 void afficherGrilleParcours(const GrilleVisite &grv, const ParamsJeu &pj)
 {
@@ -400,11 +400,11 @@ void afficherGrilleParcours(const GrilleVisite &grv, const ParamsJeu &pj)
 }
 
 /**
-	Permet de mettre ‡ jour la grille de parcours du robot par les valeurs 1 ou 2 selon dirx et diry donnÈs en paramËtres
+	Permet de mettre √† jour la grille de parcours du robot par les valeurs 1 ou 2 selon dirx et diry donn√©s en param√®tres
 	@param[in] pos - position dans la grille de parcours
 	@param[in,out] grv - grille de parcours du robot
-	@param[in] dirx - direction x (abscisse) du robot. 1 si le robot se dÈplace vers la droite, 0 s'il ne se dÈplace pas selon l'axe des abscisses, -1 s'il se dÈplace vers la gauche
-	@param[in] diry - direction y (ordonnÈe) du robot. 1 si le robot se dÈplace vers le bas, 0 s'il ne se dÈplace pas selon l'axe des ordonnÈes, -1 s'il se dÈplace vers le haut
+	@param[in] dirx - direction x (abscisse) du robot. 1 si le robot se d√©place vers la droite, 0 s'il ne se d√©place pas selon l'axe des abscisses, -1 s'il se d√©place vers la gauche
+	@param[in] diry - direction y (ordonn√©e) du robot. 1 si le robot se d√©place vers le bas, 0 s'il ne se d√©place pas selon l'axe des ordonn√©es, -1 s'il se d√©place vers le haut
 */
 void majGrilleVisite(const Position &pos, GrilleVisite &grv, int dirx, int diry)
 {
@@ -418,18 +418,18 @@ void majGrilleVisite(const Position &pos, GrilleVisite &grv, int dirx, int diry)
 }
 
 /**
-	Indique si une position dans la grille visite a dÈj‡ ÈtÈ visitÈ
+	Indique si une position dans la grille visite a d√©j√† √©t√© visit√©
 	@param[in] grv - grille de parcours du robot
 	@param[in] pos - position
-	@return boolean - true si la case est dÈj‡ visitÈ (!=0), false sinon
+	@return boolean - true si la case est d√©j√† visit√© (!=0), false sinon
 */
 bool estDejaVisite(const GrilleVisite &grv, const Position &pos)
 {
-    return (grv.tab[pos.y][pos.x] != 0 ); // verifie si la case est diff√©rente de 0
+    return (grv.tab[pos.y][pos.x] != 0 ); // verifie si la case est diff√É¬©rente de 0
 }
 
 /**
-	Permet de permuter deux variables d'entier passÈes en paramËtre
+	Permet de permuter deux variables d'entier pass√©es en param√®tre
 	@param[in,out] entier1 - 1er entier
 	@param[in,out] entier2 - 2e entier
 */
@@ -469,7 +469,7 @@ void changerDir(GrilleVisite &grv, int miroir, int &diry,  int &dirx)
 //-------------------------------------- Parcours du robot --------------------------------
 /**
 	Indique si une position dans la grille est un objet ou non
-	@param[in] gr - grille dans laquelle on vÈrifie les coordonnÈes
+	@param[in] gr - grille dans laquelle on v√©rifie les coordonn√©es
 	@param[in] pos - position dans la grille
 	@return boolean - true si la position dans la grille est un objet, false sinon
 */
@@ -480,10 +480,10 @@ bool estObjet(const Grille &gr, const Position&pos )
 }
 
 /**
-	Indique si le robot termine son parcours par la derniËre case de la grille (en bas ‡ droite)
+	Indique si le robot termine son parcours par la derni√®re case de la grille (en bas √† droite)
 	@param[in] gr - grille
 	@param[in] pos - position
-	@param[in] pj - paramËtres de jeu (nb lignes/colonnes)
+	@param[in] pj - param√®tres de jeu (nb lignes/colonnes)
 */
 bool estPosFinValide(const Grille &gr, const Position &pos, const ParamsJeu &pj)
 {
@@ -497,7 +497,7 @@ bool estPosFinValide(const Grille &gr, const Position &pos, const ParamsJeu &pj)
 
 /**
 	Permet d'avancer la position du robot dans la grille visite
-	@param[in,out] pos - position du robot, qui s'incrÈmente ou se dÈcrÈmente
+	@param[in,out] pos - position du robot, qui s'incr√©mente ou se d√©cr√©mente
 	@param[in] diry - direction y du robot
 	@param[in] dirx - direction x du robot
 */
@@ -528,12 +528,12 @@ void avancerPos(Position &pos, int diry, int dirx)
 }
 
 /**
-	Permet de rÈaliser le parcours du robot
+	Permet de r√©aliser le parcours du robot
 	@param[in] gr - grille
 	@param[in,out] grv - grille visite (parcours du robot)
 	@param[in] rp - RParcours : renseigne les informations relative au joueur (nb objets, pts totaux, bonus)
-	@param[in] nmiroirs - nombre de miroirs sur lesquels le robot est passÈ
-	@param[in] pj - paramËtres de jeu (nb lignes/colonnes)
+	@param[in] nmiroirs - nombre de miroirs sur lesquels le robot est pass√©
+	@param[in] pj - param√®tres de jeu (nb lignes/colonnes)
 */
 void parcoursRobot(Grille &gr, GrilleVisite &grv,RParcours &rp, int nmiroirs, const ParamsJeu &pj)
 {
@@ -552,7 +552,11 @@ void parcoursRobot(Grille &gr, GrilleVisite &grv,RParcours &rp, int nmiroirs, co
 
     while(pos.y < pj.nbLignes && pos.y >= 0 && pos.x < pj.nbCol && pos.x >= 0 )
     {
-
+        if (estDejaVisite(grv,pos))
+        {
+            cout << "Invalide, tu es deja passe par la "   << endl;
+            break;
+        }
         if ( estObjet(gr,pos) )
         {
             rp.nbObj++;
@@ -575,12 +579,17 @@ void parcoursRobot(Grille &gr, GrilleVisite &grv,RParcours &rp, int nmiroirs, co
 
 
         avancerPos(pos, diry, dirx);
-        // v√©rifier si la position suivante est un miroir --> agir en cons√©quence
-        // si c'est un objet, mettre √† jour RParcours
+        // v√É¬©rifier si la position suivante est un miroir --> agir en cons√É¬©quence
+        // si c'est un objet, mettre √É  jour RParcours
         // actualiser la grille
     }
 
-
+    if (estPosFinValide(gr,pos,pj))
+    {
+        cout << rp.ptsTotal << endl;
+        rp.ptsTotal = rp.ptsTotal*2;
+        cout << "score x2 : " << rp.ptsTotal << endl;
+    }
     if (cMiroir == nmiroirs) rp.ptsTotal += pj.bobo;
 
     afficherGrilleParcours(grv,pj);
@@ -594,8 +603,8 @@ void parcoursRobot(Grille &gr, GrilleVisite &grv,RParcours &rp, int nmiroirs, co
 //------------------------------------ JOUEURS -----------------------------------------------------------
 /**
 	Initialise le score et le nombre de joueurs
-	@param[in] pj - paramËtres de jeu (nbJoueur)
-	@param[in,out] score - score ‡ initialiser
+	@param[in] pj - param√®tres de jeu (nbJoueur)
+	@param[in,out] score - score √† initialiser
 */
 void initialiserScores(const ParamsJeu &pj,Scores &score)
 {
@@ -604,11 +613,11 @@ void initialiserScores(const ParamsJeu &pj,Scores &score)
 }
 
 /**
-	Permet d'actualiser le score d'un joueur donnÈ
-	@param[in,out] joueurs - tableau dans lequel sont renseignÈs tous les joueurs de la partie
-	@param[in] pj - paramËtres de jeu
-	@param[int,out] score - score ‡ incrÈmenter
-	@param[in] joueurCourant - numÈro du joueur dont il faut incrÈmenter le score
+	Permet d'actualiser le score d'un joueur donn√©
+	@param[in,out] joueurs - tableau dans lequel sont renseign√©s tous les joueurs de la partie
+	@param[in] pj - param√®tres de jeu
+	@param[int,out] score - score √† incr√©menter
+	@param[in] joueurCourant - num√©ro du joueur dont il faut incr√©menter le score
 */
 void actualiserScore(int joueurs[], const ParamsJeu &pj, Scores &score, int joueurCourant)
 {
@@ -634,15 +643,15 @@ void afficherGagnant(int joueurs[], Scores &score )
             numJoueur = i+1;
         }
     }
-    cout << "Le joueur " << numJoueur << " a gagn√©" << endl;
+    cout << "Le joueur " << numJoueur << " a gagn√É¬©" << endl;
 }
 
 
 
 //------------------------------------------Parametres du jeu ----------------------------------------------------
 /**
-	Permet ‡ l'utilisateur de saisir les paramËtres du jeu avant de dÈbuter la partie
-	@param[in,out] pj - paramËtres de jeu (nb lignes/colonnes, nb joueurs, nb objets, nb miroirs, valeur de bonus
+	Permet √† l'utilisateur de saisir les param√®tres du jeu avant de d√©buter la partie
+	@param[in,out] pj - param√®tres de jeu (nb lignes/colonnes, nb joueurs, nb objets, nb miroirs, valeur de bonus
 */
 void saisirParams(ParamsJeu &pj)
 {
@@ -674,7 +683,7 @@ void saisirParams(ParamsJeu &pj)
     }
 
     nbObj:
-    cout << "Entrer le nombres d'objet √† placer : " ;
+    cout << "Entrer le nombres d'objet √É  placer : " ;
     cin >> pj.nbObj;
     if ( pj.nbObj > pj.nbCol*pj.nbLignes || pj.nbObj <= 0)
     {
@@ -696,7 +705,7 @@ void saisirParams(ParamsJeu &pj)
     cin >> pj.bobo;
     if ( pj.bobo < 1)
     {
-        cout << "Invalide, entrer un bonus sup√©rieur ou √©gal √† 1"  << endl;
+        cout << "Invalide, entrer un bonus sup√É¬©rieur ou √É¬©gal √É  1"  << endl;
         goto vBonus;
     }
 
@@ -761,9 +770,7 @@ void saisirParams(ParamsJeu &pj)
     {
         cout << "deja visite" << endl;
     }
-
 //------------- TEST----------------
-
 //    int dirx = 0;
 //    int diry = -1;
 //    changerDir(grv,VMIROIR2,diry, dirx);
@@ -772,13 +779,11 @@ void saisirParams(ParamsJeu &pj)
 //    changerDir(grv,VMIROIR1,diry, dirx);
 //    cout << "y = " << diry << " et x = " << dirx << endl;
 //---------------------------------
-
     RParcours rp;
     Grille gr;
     initialiserGrille(gr);
     poserMiroirs(2,gr,pos);
     parcoursRobot(gr,grv,rp,2);
-
 }*/
 
 //
@@ -804,9 +809,9 @@ void saisirParams(ParamsJeu &pj)
 
 
 /**
-	Permet d'initialiser un tableau de joueurs, avec un score Ègale ‡ 0
+	Permet d'initialiser un tableau de joueurs, avec un score √©gale √† 0
 	@param[in,out] joueur - tableau de joueurs
-	@param[in] pj - paramËtres de jeu (nb lignes/colonnes)
+	@param[in] pj - param√®tres de jeu (nb lignes/colonnes)
 */
 void initialiserJoueurs(int joueur[], ParamsJeu &pj)
 {
@@ -818,7 +823,7 @@ void initialiserJoueurs(int joueur[], ParamsJeu &pj)
 }
 
 /**
-	Permet de jouer : appel toutes les fonctions nÈcessaire au bon dÈroulement de la partie
+	Permet de jouer : appel toutes les fonctions n√©cessaire au bon d√©roulement de la partie
 */
 void jeu()
 {
@@ -838,7 +843,7 @@ void jeu()
     poserObjetsGrille(gr,pj.nbObj,pj);
     int joueur[pj.nbJoueurs];
     initialiserJoueurs(joueur,pj);
-   // afficherGrille(gr,pj);
+    // afficherGrille(gr,pj);
 
 
     int objRestant = pj.nbObj;
@@ -857,9 +862,9 @@ void jeu()
         RParcours rp;
         cout << "Tour du joueur : " << joueurCourant + 1 << endl; // Affichage d'un message pour connaitre le joueur courant
         afficherGrille(gr,pj);
-        poserMiroirs(pj,gr,pos); // on va demand√© au joueur de plac√© ses miroirs
+        poserMiroirs(pj,gr,pos); // on va demand√É¬© au joueur de plac√É¬© ses miroirs
         parcoursRobot(gr,grv,rp,pj.nbMiroir,pj);
-        objRestant -= rp.nbObj; // on enleve les objets ramass√©s
+        objRestant -= rp.nbObj; // on enleve les objets ramass√É¬©s
         sc.score = rp.ptsTotal;
         actualiserScore(joueur, pj, sc,joueurCourant);
         effacerMiroirs(gr, pj);
@@ -878,8 +883,10 @@ void jeu()
     }
     afficherGagnant(joueur,sc);
 
-
-
+    for ( int i =0 ; i < pj.nbJoueurs; i++)
+    {
+        cout << "Score du joueur " << i+1 << " : " << joueur[i] << endl;
+    }
 
 }
 
